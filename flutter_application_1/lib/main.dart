@@ -45,7 +45,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   // ⚠️ API KEY'İNİZ
-  static const String googleApiKey = 'AIzaSyAb2Dmb5lSsfzLR3q-JHPrlpvK1DAv6VfI';
+  static const String googleApiKey = 'SILINMIS_ANAHTAR';
 
   Map<String, dynamic>? lastRouteInfo;
   String currentMode = 'driving';
@@ -494,7 +494,13 @@ class _MapScreenState extends State<MapScreen> {
   Future<Map<String, dynamic>?> _calculateRoute() async {
     if (stops.length < 2) return null;
 
-    final url = Uri.parse('http://192.168.1.3:8000/route');
+    final url = Uri.parse('http://192.168.1.3:8000/route'); // IP'ni kontrol et!
+
+    String apiMode = 'driving-car';
+    if (currentMode == 'walking') {
+      apiMode = 'foot-walking';
+    }
+
     final body = jsonEncode({
       "locations": stops
           .map(
@@ -505,11 +511,11 @@ class _MapScreenState extends State<MapScreen> {
             },
           )
           .toList(),
-      "initial_temp": 50000.0,
-      "cooling_rate": 0.999,
+      "transport_mode": apiMode,
+      "initial_temp": 10000.0,
+      "cooling_rate": 0.995,
       "stopping_temp": 0.001,
       "max_iter": 500000,
-      "transport_mode": currentMode,
     });
 
     try {
@@ -522,9 +528,11 @@ class _MapScreenState extends State<MapScreen> {
       if (response.statusCode == 200) {
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else {
+        print("API Hatası: ${response.statusCode}");
         return null;
       }
     } catch (e) {
+      print("Bağlantı Hatası: $e");
       return null;
     }
   }

@@ -4,7 +4,7 @@ from typing import List, Dict, Tuple
 import openrouteservice 
 
 # ==========================
-# 🔑 API KEY VE AYARLAR
+# 🔑 API KEY
 # ==========================
 API_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6Ijg1YjY0MjA5NWU1MDRkNzRhYWM1OTVmODE4Yjk0YjliIiwiaCI6Im11cm11cjY0In0="
 client = openrouteservice.Client(key=API_KEY)
@@ -13,17 +13,15 @@ client = openrouteservice.Client(key=API_KEY)
 # ⚡ MATRIX FONKSİYONU
 # ==========================
 def build_distance_matrix(points: List[Dict[str, float]], mode: str = "driving-car") -> List[List[float]]:
-    """OpenRouteService Matrix API kullanarak tek istekte tüm mesafeleri çeker."""
     coordinates = [[p["lng"], p["lat"]] for p in points]
     
-    # Mod dönüşümü
     api_mode = mode
     if mode == "driving":
         api_mode = "driving-car"
     elif mode == "walking":
         api_mode = "foot-walking"
     
-    print(f"📡 API İsteği Atılıyor... Mod: {api_mode}, Nokta Sayısı: {len(points)}")
+    print(f"📡 API İsteği: {len(points)} Durak, Mod: {api_mode}")
 
     try:
         matrix_response = client.distance_matrix(
@@ -32,26 +30,21 @@ def build_distance_matrix(points: List[Dict[str, float]], mode: str = "driving-c
             metrics=["distance"], 
             units="m" 
         )
-        
         dist_matrix = matrix_response['distances']
-        
         MAX_DIST = 99999999.0 
-        
         n = len(dist_matrix)
         for i in range(n):
             for j in range(n):
                 if dist_matrix[i][j] is None:
                     dist_matrix[i][j] = MAX_DIST
-                    
         return dist_matrix
-
     except Exception as e:
         print(f"❌ Matrix API Hatası: {e}")
         n = len(points)
         return [[99999999.0] * n for _ in range(n)]
 
 # ==========================
-# 🔥 Simulated Annealing Sınıfı (AÇIK UÇLU VERSİYON)
+# 🔥 Simulated Annealing (SADELEŞTİRİLMİŞ)
 # ==========================
 class SimulatedAnnealingTSP:
     def __init__(
@@ -69,15 +62,11 @@ class SimulatedAnnealingTSP:
         self.points = [dict(p) for p in points]
         self.n = len(self.points)
         self.mode = mode
-
         self.dist_matrix = build_distance_matrix(self.points, mode=self.mode)
 
-        # Başlangıç noktası (0. indeks) SABİT.
-        # Sadece diğer noktalar karıştırılır.
         other_indices = list(range(1, self.n))
         random.shuffle(other_indices)
         self.current = [0] + other_indices 
-        
         self.best = list(self.current)
 
         self.temp = initial_temp
@@ -91,7 +80,6 @@ class SimulatedAnnealingTSP:
     def _make_candidate(self) -> List[int]:
         cand = list(self.current)
         if self.n > 2:
-            # 0. indeks (Başlangıç) ASLA değişmez. Sadece ara duraklar değişir.
             i, j = random.sample(range(1, self.n), 2)
             cand[i], cand[j] = cand[j], cand[i]
         return cand
@@ -100,11 +88,6 @@ class SimulatedAnnealingTSP:
         dist = 0.0
         for i in range(len(seq) - 1):
             dist += self.dist_matrix[seq[i]][seq[i+1]]
-        
-        # --- DEĞİŞİKLİK 1: BURAYI SİLDİK ---
-        # dist += self.dist_matrix[seq[-1]][seq[0]]  <-- Bu satır geri dönüşü hesaplıyordu.
-        # Artık hesaplamıyor. Rota son durakta biter.
-        
         return dist
 
     def run(self) -> Tuple[List[Dict[str, float]], float]:
@@ -112,7 +95,6 @@ class SimulatedAnnealingTSP:
         while self.temp > self.stopping_temp and it < self.max_iter:
             candidate = self._make_candidate()
             cand_dist = self._distance_of(candidate)
-
             delta = cand_dist - self.current_distance
 
             if delta < 0 or math.exp(-delta / self.temp) > random.random():
@@ -126,9 +108,4 @@ class SimulatedAnnealingTSP:
             it += 1
 
         best_route = [self.points[i] for i in self.best]
-        
-        # --- DEĞİŞİKLİK 2: BURAYI DA SİLDİK ---
-        # best_route.append(self.points[self.best[0]]) <-- Başlangıca geri dönme komutu.
-        # Artık rota A -> B -> C şeklinde bitecek. A'ya dönmeyecek.
-        
         return best_route, self.best_distance

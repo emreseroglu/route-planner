@@ -20,8 +20,6 @@ class _AuthScreenState extends State<AuthScreen> {
   final _nameController = TextEditingController();
   bool _isLogin = true;
   bool _isLoading = false;
-  String? _selectedGender; // Cinsiyet
-  final _ageController = TextEditingController(); // Yaş
 
   Future<void> _submit() async {
     setState(() => _isLoading = true);
@@ -33,44 +31,25 @@ class _AuthScreenState extends State<AuthScreen> {
           password: _passwordController.text.trim(),
         );
       } else {
-        // KAYIT OL
-        // Validasyonlar
-        if (_ageController.text.isEmpty || _selectedGender == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Lütfen yaş ve cinsiyet seçiniz.")),
-          );
-          setState(() => _isLoading = false);
-          return;
-        }
-
+        // KAYIT OL (ESKİ HALİ)
         UserCredential userCred = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
               email: _emailController.text.trim(),
               password: _passwordController.text.trim(),
             );
 
+        // Kullanıcı ismini güncelle ve Firestore'a kaydet
         if (userCred.user != null) {
           await userCred.user!.updateDisplayName(_nameController.text.trim());
 
-          // Firestore'a DETAYLI kaydet
+          // Firestore'a temel bilgileri kaydet
           await FirebaseFirestore.instance
               .collection('users')
               .doc(userCred.user!.uid)
               .set({
                 'email': _emailController.text.trim(),
                 'name': _nameController.text.trim(),
-                'age':
-                    int.tryParse(_ageController.text.trim()) ??
-                    0, // Yaşı kaydet
-                'gender': _selectedGender, // Cinsiyeti kaydet
                 'createdAt': Timestamp.now(),
-                'preferences': {
-                  'safety_priority':
-                      _selectedGender == "Kadin", // Kadınsa güvenlik öncelikli
-                  'comfort_priority':
-                      (int.tryParse(_ageController.text.trim()) ?? 0) >
-                      60, // 60 yaş üstü ise konfor öncelikli
-                },
               });
         }
       }
@@ -130,44 +109,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   obscureText: true,
                 ),
-
-                // ... Şifre alanı bittikten sonra ...
-                if (!_isLogin) ...[
-                  const SizedBox(height: 10),
-                  // YAŞ ALANI
-                  TextField(
-                    controller: _ageController,
-                    decoration: const InputDecoration(
-                      labelText: "Yaş",
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.calendar_today),
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 10),
-
-                  // CİNSİYET SEÇİMİ (Dropdown)
-                  DropdownButtonFormField<String>(
-                    value: _selectedGender,
-                    decoration: const InputDecoration(
-                      labelText: "Cinsiyet",
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.wc),
-                    ),
-                    items: const [
-                      DropdownMenuItem(value: "Kadin", child: Text("Kadın")),
-                      DropdownMenuItem(value: "Erkek", child: Text("Erkek")),
-                      DropdownMenuItem(
-                        value: "BelirtmekIstemiyorum",
-                        child: Text("Belirtmek İstemiyorum"),
-                      ),
-                    ],
-                    onChanged: (val) {
-                      setState(() => _selectedGender = val);
-                    },
-                  ),
-                ],
-                // ... Butonlar devam ediyor ...
                 const SizedBox(height: 20),
                 if (_isLoading)
                   const CircularProgressIndicator()
