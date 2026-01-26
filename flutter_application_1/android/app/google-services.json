@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "987851450178",
+    "project_id": "routeplanner-93c32",
+    "storage_bucket": "routeplanner-93c32.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987851450178:android:821a34d88531bb3027cadb",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLdQ0FhUrkTSoEf3BUEAZ935WenQTv9Yc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

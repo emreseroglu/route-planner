@@ -1,0 +1,74 @@
+[
+  {
+    "name": "ADANA",
+    "description": "Akdeniz'in sıcakkanlı şehri, kebap diyarı.",
+    "imageUrl": "https://image.hurimg.com/i/hurriyet/90/1110x740/5ed75db818c7730ec03bf9c4.jpg",
+    "placesToVisit": [
+      {"name": "Taş Köprü", "lat": 36.9863, "lng": 35.3253},
+      {"name": "Sabancı Merkez Camii", "lat": 36.9912, "lng": 35.3344},
+      {"name": "Varda Köprüsü", "lat": 37.2435, "lng": 34.9768},
+      {"name": "Seyhan Baraj Gölü", "lat": 37.0345, "lng": 35.3089},
+      {"name": "Sinema Müzesi", "lat": 36.9825, "lng": 35.3281}
+    ]
+  },
+  {
+    "name": "ANKARA",
+    "description": "Türkiye'nin başkenti, Cumhuriyetin kalbi.",
+    "imageUrl": "https://cdn.britannica.com/27/188627-050-1A9083AB/Ataturk-Mausoleum-Ankara-Turkey.jpg",
+    "placesToVisit": [
+      {"name": "Anıtkabir", "lat": 39.9255, "lng": 32.8369},
+      {"name": "Ankara Kalesi", "lat": 39.9392, "lng": 32.8649},
+      {"name": "Atakule", "lat": 39.8864, "lng": 32.8552},
+      {"name": "Anadolu Medeniyetleri Müzesi", "lat": 39.9382, "lng": 32.8619},
+      {"name": "Kocatepe Camii", "lat": 39.9168, "lng": 32.8606}
+    ]
+  },
+  {
+    "name": "ANTALYA",
+    "description": "Turizmin başkenti, deniz ve tarihin eşsiz uyumu.",
+    "imageUrl": "https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt21155ac1ca63f676/687f9d115903b3a04b04e07c/BCC-2024-EXPLORER-ANTALYA-FREE_THINGS_TO_DO-HEADER-MOBILE.jpg?fit=crop&disable=upscale&auto=webp&quality=60&crop=smart",
+    "placesToVisit": [
+      {"name": "Kaleiçi", "lat": 36.8841, "lng": 30.7056},
+      {"name": "Düden Şelalesi", "lat": 36.9648, "lng": 30.7239},
+      {"name": "Konyaaltı Plajı", "lat": 36.8727, "lng": 30.6406},
+      {"name": "Aspendos Antik Tiyatrosu", "lat": 36.9390, "lng": 31.1719},
+      {"name": "Olympos", "lat": 36.3920, "lng": 30.4705}
+    ]
+  },
+  {
+    "name": "İSTANBUL",
+    "description": "Kıtaların buluştuğu, tarih ve kültür başkenti.",
+    "imageUrl": "https://www.hostelworld.com/blog/wp-content/uploads/istanbul-view-galata-bridge.jpg",
+    "placesToVisit": [
+      {"name": "Ayasofya", "lat": 41.0086, "lng": 28.9802},
+      {"name": "Topkapı Sarayı", "lat": 41.0115, "lng": 28.9833},
+      {"name": "Galata Kulesi", "lat": 41.0256, "lng": 28.9741},
+      {"name": "Kız Kulesi", "lat": 41.0211, "lng": 29.0041},
+      {"name": "Yerebatan Sarnıcı", "lat": 41.0084, "lng": 28.9779}
+    ]
+  },
+  {
+    "name": "İZMİR",
+    "description": "Ege'nin incisi, palmiyeler ve kordon boyu.",
+    "imageUrl": "https://blog.obilet.com/wp-content/uploads/2018/03/2saatkulesi-min-scaled.jpeg",
+    "placesToVisit": [
+      {"name": "Saat Kulesi", "lat": 38.4189, "lng": 27.1287},
+      {"name": "Kemeraltı Çarşısı", "lat": 38.4192, "lng": 27.1324},
+      {"name": "Efes Antik Kenti", "lat": 37.9422, "lng": 27.3630},
+      {"name": "Kordon Boyu", "lat": 38.4326, "lng": 27.1378},
+      {"name": "Tarihi Asansör", "lat": 38.4092, "lng": 27.1186}
+    ]
+  },
+  {
+    "name": "TRABZON",
+    "description": "Karadeniz'in yeşil cenneti, doğa harikası.",
+    "imageUrl": "https://content.r9cdn.net/rimg/dimg/5f/af/6d48b7fd-city-49527-16a7b4d2909.jpg?width=1366&height=768&xhint=1537&yhint=1069&crop=true",
+    "placesToVisit": [
+      {"name": "Sümela Manastırı", "lat": 40.6908, "lng": 39.6582},
+      {"name": "Uzungöl", "lat": 40.6198, "lng": 40.2974},
+      {"name": "Atatürk Köşkü", "lat": 40.9856, "lng": 39.7042},
+      {"name": "Trabzon Ayasofya Müzesi", "lat": 41.0031, "lng": 39.6975},
+      {"name": "Boztepe", "lat": 40.9994, "lng": 39.7342}
+    ]
+  }
+]
