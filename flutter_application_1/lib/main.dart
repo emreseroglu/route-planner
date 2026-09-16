@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,15 +8,19 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'dart:ui' as ui;
 import 'dart:typed_data';
+
 import 'museum_data.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
 
 // --- HARİCİ DOSYALAR ---
 import 'auth_screen.dart'; // AuthScreen ve SavedRoutesScreen
 import 'waypoint.dart'; // Waypoint modeli
+
 // -----------------------
 
 void main() async {
@@ -45,7 +50,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   // ⚠️ API KEY'İNİZ
-  static const String googleApiKey = 'SILINMIS_ANAHTAR';
+  static const String googleApiKey = '';
 
   Map<String, dynamic>? lastRouteInfo;
   String currentMode = 'driving';
